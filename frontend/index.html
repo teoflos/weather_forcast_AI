@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Addis Ababa Outlook — 24-Month Climate Forecast</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="sky-band" aria-hidden="true"></div>
+
+  <header class="masthead">
+    <div class="masthead-inner">
+      <div class="wordmark">
+        <span class="wordmark-eyebrow">Station Readout</span>
+        <h1>Addis Ababa <span class="amharic">አዲስ አበባ</span></h1>
+        <p class="coords">9.03° N · 38.74° E · 2,355 m elevation</p>
+      </div>
+      <div class="masthead-model">
+        <span class="model-tag">SARIMAX seasonal model</span>
+        <span class="model-sub">102 months observed → 24 months projected</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- NOW / NEXT ------------------------------------------------ -->
+    <section class="panel-now" id="panel-now">
+      <div class="now-card" id="now-observed">
+        <span class="now-label">Last Observed Month</span>
+        <span class="now-date" id="observed-date">—</span>
+        <div class="now-grid" id="observed-grid"><!-- filled by JS --></div>
+      </div>
+      <div class="now-divider" aria-hidden="true">
+        <span class="now-divider-line"></span>
+        <span class="now-divider-label">forecast begins</span>
+        <span class="now-divider-line"></span>
+      </div>
+      <div class="now-card now-card--forecast" id="now-forecast">
+        <span class="now-label">Next Month Projected</span>
+        <span class="now-date" id="forecast-date">—</span>
+        <div class="now-grid" id="forecast-grid"><!-- filled by JS --></div>
+      </div>
+    </section>
+
+    <!-- SEASON STRIP ------------------------------------------------ -->
+    <section class="season-strip-wrap">
+      <h2 class="section-title">The Highland Year</h2>
+      <p class="section-sub">Addis Ababa's calendar runs on three seasons, not four. Forecast months are colored by which one they fall in.</p>
+      <div class="season-strip" id="season-strip"><!-- filled by JS --></div>
+      <div class="season-legend">
+        <span class="legend-item"><i class="dot dot-bega"></i>Bega — dry, cool</span>
+        <span class="legend-item"><i class="dot dot-belg"></i>Belg — short rains</span>
+        <span class="legend-item"><i class="dot dot-kiremt"></i>Kiremt — main rains</span>
+      </div>
+    </section>
+
+    <!-- VARIABLE SELECTOR + CHART ------------------------------------------------ -->
+    <section class="chart-section">
+      <div class="chart-head">
+        <h2 class="section-title">Observed → Projected</h2>
+        <div class="var-tabs" id="var-tabs" role="tablist" aria-label="Select weather variable"><!-- filled by JS --></div>
+      </div>
+      <p class="section-sub" id="chart-caption">Ten years of monthly readings, followed by 24 months of model projection with an 80% confidence band.</p>
+      <div class="chart-wrap">
+        <svg id="chart-svg" viewBox="0 0 1000 420" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="chart-title-desc"></svg>
+        <div id="chart-tooltip" class="chart-tooltip" hidden></div>
+      </div>
+      <div class="chart-foot">
+        <span><i class="swatch swatch-hist"></i>Observed</span>
+        <span><i class="swatch swatch-fc"></i>Projected</span>
+        <span><i class="swatch swatch-band"></i>80% interval</span>
+      </div>
+    </section>
+
+    <!-- ACCURACY ------------------------------------------------ -->
+    <section class="accuracy-section">
+      <h2 class="section-title">Model Confidence</h2>
+      <p class="section-sub">Each variable was backtested by hiding the most recent 12 real months and checking the model's guess against them. Smaller bars mean tighter guesses.</p>
+      <div class="accuracy-grid" id="accuracy-grid"><!-- filled by JS --></div>
+    </section>
+
+    <!-- ABOUT ------------------------------------------------ -->
+    <section class="about-section">
+      <h2 class="section-title">About This Forecast</h2>
+      <div class="about-grid">
+        <div class="about-card">
+          <span class="about-num">01</span>
+          <h3>Source</h3>
+          <p>Monthly station records for Addis Ababa, averaged from raw daily/period readings into five climate variables per month.</p>
+        </div>
+        <div class="about-card">
+          <span class="about-num">02</span>
+          <h3>Method</h3>
+          <p>A separate seasonal ARIMA (SARIMAX) model is fit per variable, tuned to a 12-month cycle so it can learn Kiremt, Belg, and Bega on its own.</p>
+        </div>
+        <div class="about-card">
+          <span class="about-num">03</span>
+          <h3>Uncertainty</h3>
+          <p>The shaded band on each chart is an 80% confidence interval — the model's honest range, not a single overconfident number.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>Built on 2017–2025 monthly station data · projections are a statistical estimate, not a guarantee</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+variable,MAE,RMSE,unit_context
+temp_max_C,0.45,0.52,lower is better; compare to variable's typical range
+temp_min_C,0.37,0.48,lower is better; compare to variable's typical range
+precip_mm,31.05,41.1,lower is better; compare to variable's typical range
+rel_humidity_pct,4.74,6.07,lower is better; compare to variable's typical range
+sun_hours,0.81,1.02,lower is better; compare to variable's typical range
