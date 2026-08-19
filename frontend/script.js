@@ -4,7 +4,7 @@
    including a small custom SVG line/area chart (no chart library).
    ============================================================ */
 
-const API_BASE = ""; // same-origin: served by the Flask app
+const API_BASE = "http://127.0.0.1:5000"; // same-origin: served by the Flask app
 
 const VARIABLES = {
   temp_max_C:       { label: "Max Temp",   unit: "\u00b0C",  color: "temp" },
