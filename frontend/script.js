@@ -48,7 +48,8 @@ function monthLabel(dateStr) {
 /* ---------------------------------------------------------- */
 function renderNowNext() {
   const obs = state.historical[state.historical.length - 1];
-  const fc = state.forecast[0];
+  const currentMonth = new Date().toISOString().slice(0, 7);
+  const fc = state.forecast.find((row) => row.date.startsWith(currentMonth)) || state.forecast[0];
 
   document.getElementById("observed-date").textContent = obs ? monthLabel(obs.date) : "No data";
   document.getElementById("forecast-date").textContent = fc ? monthLabel(fc.date) : "No data";
