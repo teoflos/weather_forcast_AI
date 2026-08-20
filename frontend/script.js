@@ -1,6 +1,6 @@
 /* ============================================================
    WeatherForecastAI frontend
-   Vanilla JS — fetches the Flask API and renders everything by hand,
+   Vanilla JS - fetches the Flask API and renders everything by hand,
    including a small custom SVG line/area chart (no chart library).
    ============================================================ */
 
@@ -49,19 +49,26 @@ function monthLabel(dateStr) {
 function renderNowNext() {
   const obs = state.historical[state.historical.length - 1];
   const currentMonth = new Date().toISOString().slice(0, 7);
-  const fc = state.forecast.find((row) => row.date.startsWith(currentMonth)) || state.forecast[0];
+  const currentIndex = state.forecast.findIndex((row) => row.date.startsWith(currentMonth));
+  const forecastIndex = currentIndex >= 0 ? currentIndex : 0;
+  const fc = state.forecast[forecastIndex];
+  const nextFc = state.forecast[forecastIndex + 1];
 
   document.getElementById("observed-date").textContent = obs ? monthLabel(obs.date) : "No data";
   document.getElementById("forecast-date").textContent = fc ? monthLabel(fc.date) : "No data";
+  document.getElementById("next-forecast-date").textContent = nextFc ? monthLabel(nextFc.date) : "No data";
 
   const obsGrid = document.getElementById("observed-grid");
   const fcGrid = document.getElementById("forecast-grid");
+  const nextFcGrid = document.getElementById("next-forecast-grid");
   obsGrid.innerHTML = "";
   fcGrid.innerHTML = "";
+  nextFcGrid.innerHTML = "";
 
   Object.entries(VARIABLES).forEach(([key, meta]) => {
     obsGrid.appendChild(statTile(meta.label, obs ? obs[key] : null, meta.unit));
     fcGrid.appendChild(statTile(meta.label, fc ? fc[key] : null, meta.unit));
+    nextFcGrid.appendChild(statTile(meta.label, nextFc ? nextFc[key] : null, meta.unit));
   });
 }
 
@@ -251,7 +258,7 @@ function renderChart() {
   const histPoints = hist.map((r, i) => `${x(i)},${y(r[key])}`).join(" ");
   drawPolyline(svg, svgNS, histPoints, "#F3EEE0", 2);
 
-  // forecast line — start at the last historical point for a continuous join
+  // forecast line - start at the last historical point for a continuous join
   const fcPoints = [`${x(histCount - 1)},${y(hist[hist.length - 1][key])}`,
     ...fc.map((r, i) => `${x(histCount + i)},${y(r[key])}`)].join(" ");
   drawPolyline(svg, svgNS, fcPoints, "#E0973F", 2.25);

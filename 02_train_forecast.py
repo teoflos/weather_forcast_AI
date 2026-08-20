@@ -85,7 +85,7 @@ def main():
         ax.plot(mean_fc.index, mean_fc.values, label="Forecast", color="#d1495b")
         ax.fill_between(mean_fc.index, ci.iloc[:, 0], ci.iloc[:, 1],
                  color="#d1495b", alpha=0.15, label="80% interval")
-        ax.set_title(f"{var} — Addis Ababa | backtest MAE={mae:.2f}, RMSE={rmse:.2f}")
+        ax.set_title(f"{var} - Addis Ababa | backtest MAE={mae:.2f}, RMSE={rmse:.2f}")
         ax.legend(loc="upper left", fontsize=8)
         ax.grid(alpha=0.3)
 

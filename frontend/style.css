@@ -13,7 +13,7 @@
   --hairline: rgba(243, 238, 224, 0.14);
   --hairline-strong: rgba(243, 238, 224, 0.28);
 
-  /* seasonal accents — Addis Ababa's three seasons */
+  /* seasonal accents - Addis Ababa's three seasons */
   --bega: #6C93B0;      /* dry, cool */
   --belg: #86A863;      /* short rains, sprouting green */
   --kiremt: #1F7A72;    /* main rains, deep teal */
@@ -89,6 +89,28 @@ body {
   gap: 1.5rem;
   flex-wrap: wrap;
 }
+.brand-logo {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--paper);
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+}
+.brand-logo svg {
+  width: 2.8rem;
+  height: 2.8rem;
+  fill: none;
+  stroke: var(--amber);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.25;
+}
+.brand-logo:hover { color: var(--amber); }
 .wordmark-eyebrow {
   display: block;
   font-family: var(--font-mono);
@@ -168,7 +190,7 @@ section { padding: 3.25rem 0; border-bottom: 1px solid var(--hairline); }
 .panel-now {
   padding-top: 2.75rem;
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
   gap: 1.5rem;
   align-items: stretch;
 }
@@ -425,6 +447,29 @@ section { padding: 3.25rem 0; border-bottom: 1px solid var(--hairline); }
   font-size: 0.8rem;
   font-family: var(--font-mono);
 }
+.footer-branding {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.brand-logo--footer {
+  align-self: center;
+  color: var(--paper);
+}
+.brand-logo--footer svg { width: 2rem; height: 2rem; }
+.site-footer-note { margin: 0; }
+.acknowledgement { margin: 1rem 0 0.75rem; color: var(--paper-dim); }
+.github-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--amber);
+  text-decoration: none;
+}
+.github-link:hover { color: var(--paper); }
+.github-link svg { width: 1.1rem; height: 1.1rem; fill: currentColor; }
 
 /* ============================================================
    Loading / error state
@@ -436,3 +481,16 @@ section { padding: 3.25rem 0; border-bottom: 1px solid var(--hairline); }
   padding: 1rem 0;
 }
 .state-msg.is-error { color: #E08E6D; }
+
+
+.header-logo {
+  width: 2.8rem;
+  height: 2.8rem;
+  object-fit: contain;
+}
+
+.footer-logo {
+  width: 2rem;
+  height: 2rem;
+  object-fit: contain;
+}
