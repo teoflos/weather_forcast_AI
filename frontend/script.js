@@ -87,6 +87,76 @@ function statTile(label, value, unit) {
 }
 
 /* ---------------------------------------------------------- */
+/* Search                                                       */
+/* ---------------------------------------------------------- */
+function renderSearchResults(query = "") {
+  const results = document.getElementById("search-results");
+  const summary = document.getElementById("search-summary");
+  const normalizedQuery = query.trim().toLowerCase();
+  const records = [
+    ...state.historical.map((row) => ({ ...row, recordType: "Observed" })),
+    ...state.forecast.map((row) => ({ ...row, recordType: "Projected" })),
+  ];
+  if (!normalizedQuery) {
+    summary.textContent = "Type a month, year, season, or value to search";
+    results.innerHTML = "";
+    return;
+  }
+  const matches = records.filter((row) => {
+    const searchableText = [
+      ...Object.values(row),
+      monthLabel(row.date),
+      new Date(`${row.date}T00:00:00`).toLocaleDateString("en-US", { month: "long", year: "numeric" }),
+    ].join(" ").toLowerCase();
+    return searchableText.includes(normalizedQuery);
+  });
+
+  summary.textContent = normalizedQuery
+    ? `${matches.length} matching record${matches.length === 1 ? "" : "s"}`
+    : `Showing all ${matches.length} records`;
+  results.innerHTML = "";
+
+  if (matches.length === 0) {
+    const empty = document.createElement("p");
+    empty.className = "search-empty";
+    empty.textContent = "No weather records match that search.";
+    results.appendChild(empty);
+    return;
+  }
+
+  matches.forEach((row) => {
+    const card = document.createElement("article");
+    card.className = "search-record";
+    card.innerHTML = `
+      <div class="search-record-head">
+        <div><h3>${monthLabel(row.date)}</h3><span class="record-season">${row.season || "-"}</span></div>
+        <span class="record-type ${row.recordType === "Projected" ? "is-projected" : "is-observed"}">${row.recordType}</span>
+      </div>
+      <div class="search-record-grid">
+        <span><b>Max Temp</b>${fmt(row.temp_max_C)}°C</span>
+        <span><b>Min Temp</b>${fmt(row.temp_min_C)}°C</span>
+        <span><b>Rainfall</b>${fmt(row.precip_mm)} mm</span>
+        <span><b>Humidity</b>${fmt(row.rel_humidity_pct, 0)}%</span>
+        <span><b>Sunshine</b>${fmt(row.sun_hours)} hrs</span>
+      </div>`;
+    results.appendChild(card);
+  });
+}
+
+function initSearch() {
+  const form = document.getElementById("search-form");
+  const input = document.getElementById("record-search");
+  const clear = document.getElementById("search-clear");
+  form.addEventListener("submit", (event) => event.preventDefault());
+  input.addEventListener("input", () => renderSearchResults(input.value));
+  clear.addEventListener("click", () => {
+    input.value = "";
+    input.focus();
+    renderSearchResults();
+  });
+}
+
+/* ---------------------------------------------------------- */
 /* Season strip                                                */
 /* ---------------------------------------------------------- */
 function renderSeasonStrip() {
@@ -210,7 +280,6 @@ function renderChart() {
   }
   svg.appendChild(gridGroup);
 
-  // year tick labels on x axis (Jan of each year)
   allDates.forEach((d, i) => {
     if (d.endsWith("01-01")) {
       const line = document.createElementNS(svgNS, "line");
@@ -233,7 +302,6 @@ function renderChart() {
     }
   });
 
-  // "today" boundary marker
   const boundaryX = x(histCount - 1);
   const boundary = document.createElementNS(svgNS, "line");
   boundary.setAttribute("x1", boundaryX);
@@ -339,9 +407,8 @@ function attachHover(svg, rows, x, y, key, meta, histCount) {
   overlay.addEventListener("touchmove", (e) => { handleMove(e.touches[0]); }, { passive: true });
 }
 
-/* ---------------------------------------------------------- */
-/* Accuracy                                                     */
-/* ---------------------------------------------------------- */
+
+
 function renderAccuracy() {
   const grid = document.getElementById("accuracy-grid");
   grid.innerHTML = "";
@@ -371,9 +438,8 @@ function referenceScale(variable) {
   return scales[variable] || 1;
 }
 
-/* ---------------------------------------------------------- */
-/* Boot                                                          */
-/* ---------------------------------------------------------- */
+
+
 async function init() {
   try {
     const [historical, forecast, accuracy] = await Promise.all([
@@ -386,6 +452,8 @@ async function init() {
     state.accuracy = accuracy;
 
     renderNowNext();
+    initSearch();
+    renderSearchResults();
     renderSeasonStrip();
     renderTabs();
     renderChart();

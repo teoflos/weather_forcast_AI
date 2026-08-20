@@ -252,11 +252,83 @@ section { padding: 3.25rem 0; border-bottom: 1px solid var(--hairline); }
   white-space: nowrap;
 }
 
+/* ============================================================
+   Search
+   ============================================================ */
+.search-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.search-head .section-sub { margin-bottom: 0; }
+.search-form {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-width: min(100%, 360px);
+}
+.search-form input {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.65rem 4.8rem 0.65rem 2.5rem;
+  border: 1px solid var(--hairline-strong);
+  border-radius: 6px;
+  background: var(--bg-raised);
+  color: var(--paper);
+  font: 0.82rem var(--font-mono);
+}
+.search-form input::placeholder { color: var(--ink-soft); }
+.search-form input:focus { border-color: var(--amber); outline: 2px solid var(--amber-soft); }
+.search-icon {
+  position: absolute;
+  left: 0.8rem;
+  width: 1.1rem;
+  height: 1.1rem;
+  fill: none;
+  stroke: var(--amber);
+  stroke-linecap: round;
+  stroke-width: 1.8;
+  pointer-events: none;
+}
+.search-clear {
+  position: absolute;
+  right: 0.35rem;
+  padding: 0.35rem 0.55rem;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--ink-soft);
+  cursor: pointer;
+  font: 0.7rem var(--font-mono);
+}
+.search-clear:hover { color: var(--amber); }
+.search-summary {
+  margin: 1.5rem 0 0.75rem;
+  color: var(--ink-soft);
+  font: 0.75rem var(--font-mono);
+}
+.search-results-wrap { display: grid; gap: 0.75rem; }
+.search-record { padding: 1.1rem 1.25rem; background: var(--bg-raised); border-left: 2px solid var(--amber); border-radius: var(--radius); }
+.search-record-head { display: flex; align-items: start; justify-content: space-between; gap: 1rem; }
+.search-record h3 { margin: 0; color: var(--paper); font: 1.35rem var(--font-display); }
+.record-season { display: block; margin-top: 0.25rem; color: var(--ink-soft); font-size: 0.75rem; }
+.search-record-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; margin-top: 1rem; }
+.search-record-grid span { display: flex; flex-direction: column; gap: 0.2rem; color: var(--paper-dim); font: 0.95rem var(--font-mono); }
+.search-record-grid b { color: var(--ink-soft); font: 0.65rem var(--font-body); letter-spacing: 0.06em; text-transform: uppercase; }
+.record-type { font: 0.68rem var(--font-mono); }
+.record-type.is-observed { color: var(--cream-line); }
+.record-type.is-projected { color: var(--amber); }
+.search-empty { margin: 0; padding: 1.25rem; color: var(--ink-soft); font: 0.8rem var(--font-mono); }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
 @media (max-width: 720px) {
   .panel-now { grid-template-columns: 1fr; }
   .now-divider { flex-direction: row; }
   .now-divider-line { height: 1px; width: auto; flex: 1; background: repeating-linear-gradient(to right, var(--hairline-strong) 0 4px, transparent 4px 9px); }
   .now-divider-label { writing-mode: horizontal-tb; }
+  .search-record-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 /* ============================================================
@@ -408,9 +480,7 @@ section { padding: 3.25rem 0; border-bottom: 1px solid var(--hairline); }
   color: var(--ink-soft);
 }
 
-/* ============================================================
-   About section
-   ============================================================ */
+
 .about-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -437,9 +507,7 @@ section { padding: 3.25rem 0; border-bottom: 1px solid var(--hairline); }
   font-size: 0.92rem;
 }
 
-/* ============================================================
-   Footer
-   ============================================================ */
+
 .site-footer {
   text-align: center;
   padding: 2rem 1.5rem 3rem;
@@ -471,9 +539,7 @@ section { padding: 3.25rem 0; border-bottom: 1px solid var(--hairline); }
 .github-link:hover { color: var(--paper); }
 .github-link svg { width: 1.1rem; height: 1.1rem; fill: currentColor; }
 
-/* ============================================================
-   Loading / error state
-   ============================================================ */
+
 .state-msg {
   font-family: var(--font-mono);
   color: var(--ink-soft);
